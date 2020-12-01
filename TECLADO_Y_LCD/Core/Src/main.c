@@ -19,6 +19,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lcd.h"
@@ -44,6 +46,9 @@
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart2;
 
+osThreadId defaultTaskHandle;
+osThreadId claveHandle;
+osThreadId imprimirHandle;
 /* USER CODE BEGIN PV */
 
 enum states {STATE0, STATE1, STATE2, STATE3, STATE4} current_state; //, STATE5
@@ -64,8 +69,14 @@ char str[11];
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
+void StartDefaultTask(void const * argument);
+void StartTask02(void const * argument);
+void StartTask03(void const * argument);
+
 /* USER CODE BEGIN PFP */
+
 char read_keypad(void);
+void contr_password(int);
 void cursor (char*);
 void pulsa(char*);
 void error(char*);
@@ -135,338 +146,53 @@ int main(void)
       current_state = STATE0; //inicializamos el estado
   /* USER CODE END 2 */
 
+  /* USER CODE BEGIN RTOS_MUTEX */
+  /* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+  /* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+  /* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* definition and creation of defaultTask */
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* definition and creation of clave */
+  osThreadDef(clave, StartTask02, osPriorityIdle, 0, 128);
+  claveHandle = osThreadCreate(osThread(clave), NULL);
+
+  /* definition and creation of imprimir */
+  osThreadDef(imprimir, StartTask03, osPriorityIdle, 0, 128);
+  imprimirHandle = osThreadCreate(osThread(imprimir), NULL);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+  /* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
       while (1)
        {
-         /* USER CODE END WHILE */
-           input = read_keypad();
-           if(input !='F'){
-         	  switch(current_state){
-     			case STATE0:
-					if(i<4){
-						switch(input){
-							case '1':
-							a1=1;
-							cursor("1");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						switch(input){
-							case '2':
-							a2=2;
-							cursor("2");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '3':
-							a3=3;
-							cursor("3");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						switch(input){
-							case '4':
-							a4=4;
-							cursor("4");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						switch(input){
-							case '5':
-							a5=5;
-							cursor("5");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						switch(input){
-							case '6':
-							a6=6;
-							cursor("6");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						switch(input){
-							case '7':
-							a7=7;
-							cursor("7");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						switch(input){
-							case '8':
-							a8=8;
-							cursor("8");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						switch(input){
-							case '9':
-							a9=9;
-							cursor("9");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						switch(input){
-							case '0':
-							a0=0;
-							cursor("0");
-							current_state = STATE0;
-							i=i+1;
-							break;}
-						}// if
-					else{
-						current_state = STATE0;
-						error("");
-					}
-                break;
-     			case STATE1:
-					if(i<4){
-						switch(input){
-							case '1':
-							a1=1;
-							cursor("1");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '2':
-							a2=2;
-							cursor("2");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '3':
-							a3=3;
-							cursor("3");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '4':
-							a4=4;
-							cursor("4");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '5':
-							a5=5;
-							cursor("5");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '6':
-							a6=6;
-							cursor("6");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '7':
-							a7=7;
-							cursor("7");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '8':
-							a8=8;
-							cursor("8");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '9':
-							a9=9;
-							cursor("9");
-							current_state = STATE1;
-							i=i+1;
-							break;}
-						switch(input){
-							case '0':
-							a0=0;
-							cursor("0");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						}// if
-					else{
-						current_state = STATE0;
-						error("");
-					}
-                break;
-     			case STATE2:
-					if(i<4){
-						switch(input){
-							case '1':
-							a1=1;
-							cursor("1");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '2':
-							a2=2;
-							cursor("2");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						switch(input){
-							case '3':
-							a3=3;
-							cursor("3");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						switch(input){
-							case '4':
-							a4=4;
-							cursor("4");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						switch(input){
-							case '5':
-							a5=5;
-							cursor("5");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						switch(input){
-							case '6':
-							a6=6;
-							cursor("6");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						switch(input){
-							case '7':
-							a7=7;
-							cursor("7");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						switch(input){
-							case '8':
-							a8=8;
-							cursor("8");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						switch(input){
-							case '9':
-							a9=9;
-							cursor("9");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						switch(input){
-							case '0':
-							a0=0;
-							cursor("0");
-							current_state = STATE2;
-							i=i+1;
-							break;}
-						}// if
-					else{
-						current_state = STATE0;
-						error("");
-					}
-     			break;
-     			case STATE3:
-					if(i<4){
-						switch(input){
-							case '1':
-							a1=1;
-							cursor("1");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '2':
-							a2=2;
-							cursor("2");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '3':
-							a3=3;
-							cursor("3");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '4':
-							a4=4;
-							cursor("4");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '5':
-							a5=5;
-							cursor("5");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '6':
-							a6=6;
-							cursor("6");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '7':
-							a7=7;
-							cursor("7");
-							current_state = STATE4;
-							i=i+1;
-							break;}
-						switch(input){
-							case '8':
-							a8=8;
-							cursor("8");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '9':
-							a9=9;
-							cursor("9");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						switch(input){
-							case '0':
-							a0=0;
-							cursor("0");
-							current_state = STATE3;
-							i=i+1;
-							break;}
-						}// if
-					else{
-						current_state = STATE0;
-						error("");
-					}
-				break;
-     			case STATE4:
-					unlock_safe();
-					cursor("*");
-					pulsa("");
-				break;
+    /* USER CODE END WHILE */
 
-     		  } // switch(current_state)
-           }
-         /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
        }
-       /* USER CODE END 3 */
-     }
+  /* USER CODE END 3 */
+}
 
 /**
   * @brief System Clock Configuration
@@ -629,15 +355,338 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+
+void contr_password(int input){
+	input = read_keypad();
+	           if(input !='F'){
+	         	  switch(current_state){
+	     			case STATE0:
+						if(i<4){
+							switch(input){
+								case '1':
+								a1=1;
+								cursor("1");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							switch(input){
+								case '2':
+								a2=2;
+								cursor("2");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '3':
+								a3=3;
+								cursor("3");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							switch(input){
+								case '4':
+								a4=4;
+								cursor("4");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							switch(input){
+								case '5':
+								a5=5;
+								cursor("5");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							switch(input){
+								case '6':
+								a6=6;
+								cursor("6");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							switch(input){
+								case '7':
+								a7=7;
+								cursor("7");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							switch(input){
+								case '8':
+								a8=8;
+								cursor("8");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							switch(input){
+								case '9':
+								a9=9;
+								cursor("9");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							switch(input){
+								case '0':
+								a0=0;
+								cursor("0");
+								current_state = STATE0;
+								i=i+1;
+								break;}
+							}// if
+						else{
+							current_state = STATE0;
+							error("");
+						}
+	                break;
+	     			case STATE1:
+						if(i<4){
+							switch(input){
+								case '1':
+								a1=1;
+								cursor("1");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '2':
+								a2=2;
+								cursor("2");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '3':
+								a3=3;
+								cursor("3");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '4':
+								a4=4;
+								cursor("4");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '5':
+								a5=5;
+								cursor("5");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '6':
+								a6=6;
+								cursor("6");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '7':
+								a7=7;
+								cursor("7");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '8':
+								a8=8;
+								cursor("8");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '9':
+								a9=9;
+								cursor("9");
+								current_state = STATE1;
+								i=i+1;
+								break;}
+							switch(input){
+								case '0':
+								a0=0;
+								cursor("0");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							}// if
+						else{
+							current_state = STATE0;
+							error("");
+						}
+	                break;
+	     			case STATE2:
+						if(i<4){
+							switch(input){
+								case '1':
+								a1=1;
+								cursor("1");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '2':
+								a2=2;
+								cursor("2");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							switch(input){
+								case '3':
+								a3=3;
+								cursor("3");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							switch(input){
+								case '4':
+								a4=4;
+								cursor("4");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							switch(input){
+								case '5':
+								a5=5;
+								cursor("5");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							switch(input){
+								case '6':
+								a6=6;
+								cursor("6");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							switch(input){
+								case '7':
+								a7=7;
+								cursor("7");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							switch(input){
+								case '8':
+								a8=8;
+								cursor("8");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							switch(input){
+								case '9':
+								a9=9;
+								cursor("9");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							switch(input){
+								case '0':
+								a0=0;
+								cursor("0");
+								current_state = STATE2;
+								i=i+1;
+								break;}
+							}// if
+						else{
+							current_state = STATE0;
+							error("");
+						}
+	     			break;
+	     			case STATE3:
+						if(i<4){
+							switch(input){
+								case '1':
+								a1=1;
+								cursor("1");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '2':
+								a2=2;
+								cursor("2");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '3':
+								a3=3;
+								cursor("3");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '4':
+								a4=4;
+								cursor("4");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '5':
+								a5=5;
+								cursor("5");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '6':
+								a6=6;
+								cursor("6");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '7':
+								a7=7;
+								cursor("7");
+								current_state = STATE4;
+								i=i+1;
+								break;}
+							switch(input){
+								case '8':
+								a8=8;
+								cursor("8");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '9':
+								a9=9;
+								cursor("9");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							switch(input){
+								case '0':
+								a0=0;
+								cursor("0");
+								current_state = STATE3;
+								i=i+1;
+								break;}
+							}// if
+						else{
+							current_state = STATE0;
+							error("");
+						}
+					break;
+	     			case STATE4:
+						unlock_safe();
+						cursor("*");
+						pulsa("");
+					break;
+
+	     		  	  } // switch(current_state)
+	           } //if(input !='F')
+} //funcion
+
+
 uint32_t pos=5;
 uint32_t post=5;
 char contra[11];
-//uint32_t v1[4] = {0,0,0,0};
-
-
-
-
-
 
 void cursor (char* val){
 if(pos==5){
@@ -852,6 +901,66 @@ char read_keypad(void)
      }
 
 /* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+  * @brief  Function implementing the defaultTask thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void const * argument)
+{
+  /* USER CODE BEGIN 5 */
+  /* Infinite loop */
+  for(;;)
+  {
+	  if(input != 'F')
+	  {
+			contr_password(input);
+	  }
+
+    osDelay(1);
+  }
+  /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartTask02 */
+/**
+* @brief Function implementing the clave thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask02 */
+void StartTask02(void const * argument)
+{
+  /* USER CODE BEGIN StartTask02 */
+  /* Infinite loop */
+	for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartTask02 */
+}
+
+/* USER CODE BEGIN Header_StartTask03 */
+/**
+* @brief Function implementing the imprimir thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask03 */
+void StartTask03(void const * argument)
+{
+  /* USER CODE BEGIN StartTask03 */
+  /* Infinite loop */
+  for(;;)
+  {
+
+    osDelay(1);
+  }
+  /* USER CODE END StartTask03 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
