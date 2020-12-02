@@ -47,8 +47,6 @@
 UART_HandleTypeDef huart2;
 
 osThreadId defaultTaskHandle;
-osThreadId claveHandle;
-osThreadId imprimirHandle;
 /* USER CODE BEGIN PV */
 
 enum states {STATE0, STATE1, STATE2, STATE3, STATE4} current_state; //, STATE5
@@ -70,8 +68,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 void StartDefaultTask(void const * argument);
-void StartTask02(void const * argument);
-void StartTask03(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -166,14 +162,6 @@ int main(void)
   /* definition and creation of defaultTask */
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-
-  /* definition and creation of clave */
-  osThreadDef(clave, StartTask02, osPriorityIdle, 0, 128);
-  claveHandle = osThreadCreate(osThread(clave), NULL);
-
-  /* definition and creation of imprimir */
-  osThreadDef(imprimir, StartTask03, osPriorityIdle, 0, 128);
-  imprimirHandle = osThreadCreate(osThread(imprimir), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -923,43 +911,6 @@ void StartDefaultTask(void const * argument)
     osDelay(1);
   }
   /* USER CODE END 5 */
-}
-
-/* USER CODE BEGIN Header_StartTask02 */
-/**
-* @brief Function implementing the clave thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTask02 */
-void StartTask02(void const * argument)
-{
-  /* USER CODE BEGIN StartTask02 */
-  /* Infinite loop */
-	for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartTask02 */
-}
-
-/* USER CODE BEGIN Header_StartTask03 */
-/**
-* @brief Function implementing the imprimir thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTask03 */
-void StartTask03(void const * argument)
-{
-  /* USER CODE BEGIN StartTask03 */
-  /* Infinite loop */
-  for(;;)
-  {
-
-    osDelay(1);
-  }
-  /* USER CODE END StartTask03 */
 }
 
 /**
