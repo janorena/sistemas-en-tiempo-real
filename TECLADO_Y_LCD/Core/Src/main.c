@@ -357,70 +357,71 @@ void contr_password(int input){
 								cursor("1");
 								current_state = STATE0;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '2':
 								a2=2;
 								cursor("2");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '3':
 								a3=3;
 								cursor("3");
 								current_state = STATE0;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '4':
 								a4=4;
 								cursor("4");
 								current_state = STATE0;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '5':
 								a5=5;
 								cursor("5");
 								current_state = STATE0;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '6':
 								a6=6;
 								cursor("6");
 								current_state = STATE0;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '7':
 								a7=7;
 								cursor("7");
 								current_state = STATE0;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '8':
 								a8=8;
 								cursor("8");
 								current_state = STATE0;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '9':
 								a9=9;
 								cursor("9");
 								current_state = STATE0;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '0':
 								a0=0;
 								cursor("0");
 								current_state = STATE0;
 								i=i+1;
-								break;}
+								break;
+								}//switch
 							}// if
 						else{
 							current_state = STATE0;
@@ -435,70 +436,71 @@ void contr_password(int input){
 								cursor("1");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '2':
 								a2=2;
 								cursor("2");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '3':
 								a3=3;
 								cursor("3");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '4':
 								a4=4;
 								cursor("4");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '5':
 								a5=5;
 								cursor("5");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '6':
 								a6=6;
 								cursor("6");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '7':
 								a7=7;
 								cursor("7");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '8':
 								a8=8;
 								cursor("8");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '9':
 								a9=9;
 								cursor("9");
 								current_state = STATE1;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '0':
 								a0=0;
 								cursor("0");
 								current_state = STATE2;
 								i=i+1;
-								break;}
+								break;
+								}//switch
 							}// if
 						else{
 							current_state = STATE0;
@@ -513,70 +515,71 @@ void contr_password(int input){
 								cursor("1");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '2':
 								a2=2;
 								cursor("2");
 								current_state = STATE2;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '3':
 								a3=3;
 								cursor("3");
 								current_state = STATE2;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '4':
 								a4=4;
 								cursor("4");
 								current_state = STATE2;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '5':
 								a5=5;
 								cursor("5");
 								current_state = STATE2;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '6':
 								a6=6;
 								cursor("6");
 								current_state = STATE2;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '7':
 								a7=7;
 								cursor("7");
 								current_state = STATE2;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '8':
 								a8=8;
 								cursor("8");
 								current_state = STATE2;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '9':
 								a9=9;
 								cursor("9");
 								current_state = STATE2;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '0':
 								a0=0;
 								cursor("0");
 								current_state = STATE2;
 								i=i+1;
-								break;}
+								break;
+								}//switch
 							}// if
 						else{
 							current_state = STATE0;
@@ -591,70 +594,71 @@ void contr_password(int input){
 								cursor("1");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '2':
 								a2=2;
 								cursor("2");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '3':
 								a3=3;
 								cursor("3");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '4':
 								a4=4;
 								cursor("4");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '5':
 								a5=5;
 								cursor("5");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '6':
 								a6=6;
 								cursor("6");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '7':
 								a7=7;
 								cursor("7");
 								current_state = STATE4;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '8':
 								a8=8;
 								cursor("8");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '9':
 								a9=9;
 								cursor("9");
 								current_state = STATE3;
 								i=i+1;
-								break;}
-							switch(input){
+								break;
+
 								case '0':
 								a0=0;
 								cursor("0");
 								current_state = STATE3;
 								i=i+1;
-								break;}
+								break;
+								}//switch
 							}// if
 						else{
 							current_state = STATE0;
